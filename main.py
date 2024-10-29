@@ -122,5 +122,4 @@ img_original.grid(row=5, column=0, columnspan=2)
 img_end = tk.Canvas(window, width=size_img_show[0], height=size_img_show[1], relief=SUNKEN)
 img_end.grid(row=5, column=2, columnspan=2)
 
-#todo: close the program nicely
 window.mainloop()
