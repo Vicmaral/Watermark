@@ -1,12 +1,9 @@
-import customtkinter
+import customtkinter as CTk
 import os
-import tkinter as tk
-from tkinter import SUNKEN
-from tkinter import filedialog
-
+from tkinter import Canvas
 from PIL import Image, ImageTk
 
-customtkinter.set_appearance_mode("light")
+CTk.set_appearance_mode("light")
 WHITE = "#ffffff"
 BLACK = "#000000"
 PINK = "#e2979c"
@@ -33,34 +30,34 @@ def center_window():
 
 def get_img():
     global img_path, i
-    img_path = filedialog.askopenfilename(filetypes=[
+    img_path = CTk.filedialog.askopenfilename(filetypes=[
         ('image files', '*.png'),
         ('image files', '*.jpg'),
     ])
-    img_path_text.delete(0, customtkinter.END)
+    img_path_text.delete(0, CTk.END)
     img_path_text.insert(0, img_path[len(img_path) - 150:])  #print the last 150 characters of the url
     img = Image.open(img_path)
     img.thumbnail(size_img_show)
     i = ImageTk.PhotoImage(img)
-    img_original.create_image(0, 0, image=i, anchor=tk.NW)
+    img_original.create_image(0, 0, image=i, anchor=CTk.NW)
 
 
 def get_logo():
     global logo_path
-    logo_path = filedialog.askopenfilename(filetypes=[
+    logo_path = CTk.filedialog.askopenfilename(filetypes=[
         ('image files', '*.png'),
         ('image files', '*.jpg'),
     ])
-    logo_path_text.delete(0, customtkinter.END)
+    logo_path_text.delete(0, CTk.END)
     logo_path_text.insert(0, logo_path[len(logo_path) - 150:])
 
 
 def get_folder():
     global folder_path
     folder_path = ''
-    folder_path = filedialog.askdirectory()
-    folder_path_text.delete("1.0", tk.END)
-    folder_path_text.insert(tk.END, folder_path[len(folder_path) - 150:])
+    folder_path = CTk.filedialog.askdirectory()
+    folder_path_text.delete("1.0", CTk.END)
+    folder_path_text.insert(CTk.END, folder_path[len(folder_path) - 150:])
 
 
 def add_watermark():
@@ -75,40 +72,40 @@ def add_watermark():
     #todo: Ask if oversave
     i.thumbnail(size_img_show)
     i = ImageTk.PhotoImage(i)
-    img_end.create_image(0, 0, image=i, anchor=tk.NW)
+    img_end.create_image(0, 0, image=i, anchor=CTk.NW)
 
 
 #Create windows
-window = customtkinter.CTk()  #todo: decoration
+window = CTk.CTk()  #todo: decoration
 window.title("Watermark")
 window.config(bg=YELLOW, height=h_size, width=w_size)
 center_window()
 
 # Draw Tittle
-customtkinter.CTkLabel(window, text="Watermarker", font=(FONT_NAME, 40, 'bold'), fg_color=YELLOW,
+CTk.CTkLabel(window, text="Watermarker", font=(FONT_NAME, 40, 'bold'), fg_color=YELLOW,
                        ).grid(row=0, column=1, columnspan=2)
 
 # Buttons
-customtkinter.CTkButton(master=window, text="Get IMG", font=(FONT_NAME, 15, 'bold'),
+CTk.CTkButton(master=window, text="Get IMG", font=(FONT_NAME, 15, 'bold'),
                         command=lambda: get_img()).grid(row=1, column=0, rowspan=1)
 
-customtkinter.CTkButton(master=window, text="Get LOGO", font=(FONT_NAME, 15, 'bold'),
+CTk.CTkButton(master=window, text="Get LOGO", font=(FONT_NAME, 15, 'bold'),
                         command=lambda: get_logo()).grid(row=2, column=0, rowspan=1)
 
-customtkinter.CTkButton(master=window, text="Save in:", font=(FONT_NAME, 15, 'bold'),
+CTk.CTkButton(master=window, text="Save in:", font=(FONT_NAME, 15, 'bold'),
                         command=lambda: get_folder()).grid(row=3, column=0, rowspan=1)
 
-customtkinter.CTkButton(master=window, text="ADD Watermark", font=(FONT_NAME, 15, 'bold'),
+CTk.CTkButton(master=window, text="ADD Watermark", font=(FONT_NAME, 15, 'bold'),
                         command=lambda: add_watermark()).grid(row=4, column=1, columnspan=2)
 # Locations
-img_path_text = customtkinter.CTkEntry(window, height=1, width=600)
+img_path_text = CTk.CTkEntry(window, height=1, width=600)
 img_path_text.grid(row=1, column=1, columnspan=3)
 
-logo_path_text = customtkinter.CTkEntry(window, height=1, width=600)
+logo_path_text = CTk.CTkEntry(window, height=1, width=600)
 logo_path_text.grid(row=2, column=1, columnspan=3)
 
-folder_path_text = customtkinter.CTkEntry(window, height=1, width=600)
-folder_path_text.insert(tk.END, folder_path[len(folder_path) - 150:])
+folder_path_text = CTk.CTkEntry(window, height=1, width=600)
+folder_path_text.insert(CTk.END, folder_path[len(folder_path) - 150:])
 folder_path_text.grid(row=3, column=1, columnspan=3)
 
 #Background set
@@ -116,10 +113,10 @@ folder_path_text.grid(row=3, column=1, columnspan=3)
 # canvas.create_image(w_size, h_size, image=img)
 
 #imgs places
-img_original = tk.Canvas(window, width=size_img_show[0], height=size_img_show[1])
+img_original = Canvas(window, width=size_img_show[0], height=size_img_show[1])
 img_original.grid(row=5, column=0, columnspan=2)
 
-img_end = tk.Canvas(window, width=size_img_show[0], height=size_img_show[1], relief=SUNKEN)
+img_end = Canvas(window, width=size_img_show[0], height=size_img_show[1])
 img_end.grid(row=5, column=2, columnspan=2)
 
 window.mainloop()
